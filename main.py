@@ -1,5 +1,4 @@
 import config
-import requests
 
 from flask import Flask, jsonify, render_template
 
@@ -23,7 +22,7 @@ def static_files():
 @app.route('/<path:path>', methods=['GET'])
 def dashboard(path):
     root = Module.from_slug(path)
-
+    root.fetch()
     return render_template('page.html',
         title=root.title,
         content=root.render())

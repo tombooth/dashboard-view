@@ -1,4 +1,6 @@
 import config
+import grequests
+import itertools
 import json
 import requests
 
@@ -127,7 +129,7 @@ class Module(object):
 
         self.title = json['title']
         self.description = json.get('description', None)
-        self.children = None
+        self.children = []
         self.data_source = None
 
         if 'dashboard-type' in json:
@@ -206,13 +208,24 @@ class Module(object):
 
         return data_to_table(self.axes(), raw_data)
 
+    def all_data_sources(self):
+        if self.data_source is None:
+            return list(itertools.chain.from_iterable(
+                [child.all_data_sources() for child in self.children]))
+        else:
+            return [self.data_source]
+
+    def fetch(self):
+        data_sources = self.all_data_sources()
+        requests = [grequests.get(ds.url()) for ds in data_sources]
+        responses = grequests.map(requests)
+
+        for data_source, response in zip(data_sources, responses):
+            data_source.parse_response(response)
 
     def render(self, depth=1):
-        rendered_children = None
-
-        if self.children is not None:
-            rendered_children = \
-                '\n'.join([m.render(depth=depth+1) for m in self.children])
+        rendered_children = \
+            '\n'.join([m.render(depth=depth+1) for m in self.children])
 
         return render_template('module.html',
             depth=depth,

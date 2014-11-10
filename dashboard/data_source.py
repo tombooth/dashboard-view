@@ -1,5 +1,4 @@
 import config
-import requests
 import urllib
 
 
@@ -7,6 +6,7 @@ class DataSource(object):
 
     def __init__(self, json):
         self._json = json
+        self._got = None
 
     def _query_string(self):
         query_string = ''
@@ -28,14 +28,16 @@ class DataSource(object):
             config.DATA_URL, self._json['data-group'],
             self._json['data-type'], self._query_string())
 
-    def get(self):
-        response = requests.get(self.url(), verify=False)
-
+    def parse_response(self, response):
         if response.status_code == 200:
-            return response.json()['data']
+            self._got = response.json()['data']
+            return self._got
         elif response.status_code == 404:
             return None
         else:
             #should raise error
             print response.status_code, response.text
             return None
+
+    def get(self):
+        return self._got
