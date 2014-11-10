@@ -1,4 +1,4 @@
-(function(d3, c3) {
+(function(d3, c3, format) {
 
   var module_tables = document.querySelectorAll('section.module > table');
 
@@ -9,7 +9,7 @@
 
     [].forEach.call(header_cells, function(header_cell, i) {
       axes[i] = {
-        format: JSON.parse(header_cell.getAttribute('data-format')),
+        format_options: JSON.parse(header_cell.getAttribute('data-format')),
         data: [header_cell.innerText],
       }
     });
@@ -28,7 +28,11 @@
       },
       axis: {
         x: {
-          type: 'timeseries'
+          type: 'timeseries',
+          tick: { format: format.bind(null, axes[0].format_options) }
+        },
+        y: {
+          tick: { format: format.bind(null, axes[1].format_options) }
         }
       }
     });
@@ -37,4 +41,4 @@
 
   });
 
-})(window.d3, window.c3);
+})(window.d3, window.c3, window.format);
