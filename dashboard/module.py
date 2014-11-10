@@ -1,4 +1,5 @@
 import config
+import json
 import requests
 
 from collections import OrderedDict
@@ -52,6 +53,58 @@ def find_by_grouping(axis, data):
 
     return None
 
+
+def data_to_table(axes, data):
+    if axes is None or 'x' not in axes or 'y' not in axes:
+        return None
+
+    groupped_data = group_by_x(axes['x']['key'], data)
+
+    rows = []
+    x_axis_format = axes['x'].get('format', {})
+    for x_value, data in groupped_data.iteritems():
+        row = [{ 'raw': x_value, 'formatted': format(x_value, x_axis_format)}]
+        for axis in axes['y']:
+            formatting = axis.get('format', {})
+
+            if 'groupKey' in axis and 'groupValue' in axis:
+                datum = find_by_grouping(axis, data)
+            else:
+                datum = data[0]
+
+            if datum is not None:
+                value = datum[axis['key']]
+                row.append({
+                    'formatted': format(value, formatting),
+                    'raw': value,
+                })
+            else:
+                row.append({
+                    'formatted': None,
+                    'raw': None,
+                })
+        rows.append(row)
+
+    try:
+        fields = [{
+            'label': axes['x']['label'],
+            'format': json.dumps(axes['x'].get('format', {}),)
+        }] + [{
+            'label': axis['label'],
+            'format': json.dumps(axis.get('format', {})),
+        } for axis in axes['y']]
+    except KeyError:
+        fields = [{
+            'label': '',
+            'format': '{}',
+        }] * len(rows[0])
+        print self.data_source.url()
+        print self._json['module-type']
+
+    return {
+        'fields': fields,
+        'rows': rows,
+    }
 
 class Module(object):
 
@@ -148,45 +201,10 @@ class Module(object):
 
         raw_data = self.data_source.get()
 
-        if raw_data is not None:
-            axes = self.axes()
-
-            if axes is not None and 'x' in axes and 'y' in axes:
-                groupped_data = group_by_x(axes['x']['key'], raw_data)
-
-                rows = []
-                x_axis_format = axes['x'].get('format', {})
-                for x_value, data in groupped_data.iteritems():
-                    row = [format(x_value, x_axis_format)]
-                    for axis in axes['y']:
-                        formatting = axis.get('format', {})
-
-                        if 'groupKey' in axis and 'groupValue' in axis:
-                            datum = find_by_grouping(axis, data)
-                        else:
-                            datum = data[0]
-
-                        if datum is not None:
-                            row.append(format(datum[axis['key']], formatting))
-                        else:
-                            row.append(None)
-                    rows.append(row)
-
-                try:
-                    fields = [axes['x']['label']] + [axis['label'] for axis in axes['y']]
-                except KeyError:
-                    fields = [''] * len(rows[0])
-                    print self.data_source.url()
-                    print self._json['module-type']
-
-                return {
-                    'fields': fields,
-                    'rows': rows,
-                }
-            else:
-                return None
-        else:
+        if raw_data is None:
             return None
+
+        return data_to_table(self.axes(), raw_data)
 
 
     def render(self, depth=1):
