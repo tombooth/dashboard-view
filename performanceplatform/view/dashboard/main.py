@@ -15,6 +15,11 @@ def favicon():
     return ''
 
 
+@app.route('/static/<path:path>', methods=['GET'])
+def static_files():
+    return send_from_directory(config.STATIC_PATH, path)
+
+
 @app.route('/<path:path>', methods=['GET'])
 def dashboard(path):
     root = Module.from_slug(path)
