@@ -3,7 +3,7 @@ import requests
 
 from flask import Flask, jsonify, render_template
 
-from module import Module
+from dashboard.module import Module
 
 
 app = Flask(__name__)

@@ -8,4 +8,4 @@ fi
 . venv/bin/activate
 pip install -r requirements.txt
 
-python performanceplatform/view/dashboard/main.py
+python main.py

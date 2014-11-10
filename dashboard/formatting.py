@@ -1,7 +1,6 @@
+import arrow
 import logging
 import moment
-
-import arrow
 
 
 def format_integer(value, options):

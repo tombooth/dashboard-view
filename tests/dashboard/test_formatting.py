@@ -2,7 +2,7 @@ import json
 
 from hamcrest import assert_that, equal_to
 
-from performanceplatform.view.dashboard.formatting import format
+from dashboard.formatting import format
 
 
 def test_spec_formats():
