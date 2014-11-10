@@ -5,6 +5,7 @@ from collections import OrderedDict
 from flask import render_template
 
 from data_source import DataSource
+from formatting import format
 
 
 def pluck(fields, datum):
@@ -154,15 +155,21 @@ class Module(object):
                 groupped_data = group_by_x(axes['x']['key'], raw_data)
 
                 rows = []
+                x_axis_format = axes['x'].get('format', {})
                 for x_value, data in groupped_data.iteritems():
-                    row = [x_value]
+                    row = [format(x_value, x_axis_format)]
                     for axis in axes['y']:
+                        formatting = axis.get('format', {})
+
                         if 'groupKey' in axis and 'groupValue' in axis:
                             datum = find_by_grouping(axis, data)
                         else:
                             datum = data[0]
 
-                        row.append(datum[axis['key']] if datum is not None else None)
+                        if datum is not None:
+                            row.append(format(datum[axis['key']], formatting))
+                        else:
+                            row.append(None)
                     rows.append(row)
 
                 try:

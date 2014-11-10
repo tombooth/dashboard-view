@@ -1,0 +1,48 @@
+[
+    {
+        "format": "integer",
+        "input": 1.0,
+        "output": "1"
+    },
+    {
+        "format": {
+            "type": "integer"
+        },
+        "input": 1.0,
+        "output": "1"
+    },
+    {
+        "format": "date",
+        "input": "2014-11-10T18:05:09+00:00",
+        "output": "10 November 2014"
+    },
+    {
+        "format": "time",
+        "input": "2014-11-10T18:05:09+00:00",
+        "output": "6:05pm"
+    },
+    {
+        "format": "date",
+        "input": [
+            "2014-11-03T00:00:00+00:00",
+            "2014-11-10T00:00:00+00:00"
+        ],
+        "output": "3 to 10 November 2014"
+    },
+    {
+        "format": "date",
+        "input": [
+            "2014-10-27T00:00:00+00:00",
+            "2014-11-03T00:00:00+00:00"
+        ],
+        "output": "27 October to 3 November 2014"
+    },
+    {
+        "format": "date",
+        "input": [
+            "2013-12-30T00:00:00+00:00",
+            "2014-01-06T00:00:00+00:00"
+        ],
+        "output": "30 December 2013 to 6 January 2014"
+    }
+]
