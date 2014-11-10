@@ -1,0 +1,19 @@
+<section>
+  <h{{depth}}>{{ title }}</h{{depth}}>
+  {% if description %}<p>{{ description|safe }}</p>{% endif %}
+  {% if data %}
+  <table>
+    <thead>
+      <tr>{% for field in data.fields %}<th>{{ field }}</th>{% endfor %}</tr>
+    </thead>
+    <tbody>
+      {% for row in data.rows %}
+      <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+  {% if children %}
+  {{ children|safe }}
+  {% endif %}
+</section>
