@@ -23,9 +23,10 @@ def static_files():
 def dashboard(path):
     root = Module.from_slug(path)
     root.fetch()
-    return render_template('page.html',
+    return render_template('dashboard.html',
         title=root.title,
-        content=root.render())
+        content=root.render(),
+        asset_path='/static/govuk-template/')
 
 
 if __name__ == '__main__':
