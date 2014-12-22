@@ -2,12 +2,18 @@ import config
 
 from flask import Flask, jsonify, render_template
 
+from flask.ext.assets import Environment, Bundle
+
 from dashboard.module import Module
 
 
 app = Flask(__name__)
 app.debug = True
 
+assets = Environment(app)
+assets.url = app.static_url_path
+scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
+assets.register('scss_all', scss)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -26,7 +32,7 @@ def dashboard(path):
     return render_template('dashboard.html',
         title=root.title,
         content=root.render(),
-        asset_path='/static/govuk-template/')
+        govuk_template_path='/static/govuk-template/')
 
 
 if __name__ == '__main__':
