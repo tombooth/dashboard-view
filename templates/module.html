@@ -1,4 +1,9 @@
-<section class="module">
+{% if depth==1 %}
+  <main id="content">
+{% else %}
+  <section class="module">
+{% endif %}
+
   <h{{depth}}>{{ title }}</h{{depth}}>
   {% if description %}<p>{{ description|safe }}</p>{% endif %}
   {% if data %}
@@ -16,4 +21,9 @@
   {% if children %}
   {{ children|safe }}
   {% endif %}
-</section>
+
+{% if depth==1 %}
+  </main>
+{% else %}
+  </section>
+{% endif %}
