@@ -1,4 +1,4 @@
-import config
+import config, scss
 
 from flask import Flask, jsonify, render_template
 
@@ -12,6 +12,10 @@ app.debug = True
 
 assets = Environment(app)
 assets.url = app.static_url_path
+scss.config.LOAD_PATHS = [
+    '../govuk_frontend_toolkit/stylesheets/',
+    '../govuk_elements/public/sass/',
+]
 scss = Bundle('css/main.scss', filters='pyscss', output='css/main.css')
 assets.register('scss_all', scss)
 
