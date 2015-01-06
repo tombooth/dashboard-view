@@ -11,6 +11,8 @@
 // govuk_elements imports
 @import "elements/reset";
 @import "elements/helpers";
+@import "elements/tables";
+@import "elements/panels"; // Fold-out information
 
 // dashboard-view imports
 @import "alpha-beta-badge";
