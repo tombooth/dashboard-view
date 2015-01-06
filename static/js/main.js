@@ -16,7 +16,7 @@
 
     [].forEach.call(rows, function(row) {
       [].forEach.call(row.querySelectorAll('td'), function(cell, i) {
-        axes[i].data.push(cell.getAttribute('data-raw'));
+        axes[i].data.push(JSON.parse(cell.getAttribute('data-raw')));
       });
     });
 

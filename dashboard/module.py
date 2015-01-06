@@ -65,7 +65,10 @@ def data_to_table(axes, data):
     rows = []
     x_axis_format = axes['x'].get('format', {})
     for x_value, data in groupped_data.iteritems():
-        row = [{ 'raw': x_value, 'formatted': format(x_value, x_axis_format)}]
+        row = [{
+            'formatted': format(x_value, x_axis_format),
+            'raw': json.dumps(x_value),
+        }]
         for axis in axes['y']:
             formatting = axis.get('format', {})
 
@@ -78,7 +81,7 @@ def data_to_table(axes, data):
                 value = datum[axis['key']]
                 row.append({
                     'formatted': format(value, formatting),
-                    'raw': value,
+                    'raw': json.dumps(value),
                 })
             else:
                 row.append({
