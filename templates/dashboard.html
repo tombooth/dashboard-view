@@ -11,6 +11,41 @@
     {% endassets %}
 {% endblock %}
 
+{% block header_class %}with-proposition{% endblock %}
+
+{% block proposition_header %}
+<div class="header-proposition">
+    <div class="content">
+        <a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+        <nav id="proposition-menu">
+            <a href="https://www.gov.uk/performance" id="proposition-name">
+                Performance <span class="beta-badge">beta</span>
+            </a>
+            <ul id="proposition-links">
+                <li><a href="https://www.gov.uk/performance/services">
+                    Transactions
+                </a></li>
+                <li><a href="https://www.gov.uk/performance/web-traffic">
+                    Web traffic
+                </a></li>
+                <li><a href="http://performance-platform.readthedocs.org">
+                    Get a dashboard
+                </a></li>
+                <li><a href="https://www.gov.uk/performance/about">
+                    About
+                </a></li>
+                <li><a href="https://www.gov.uk/performance/prototypes">
+                    Prototypes
+                </a></li>
+                <li><a href="https://gdsdata.blog.gov.uk/">
+                    Blog
+                </a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}{{ content|safe }}{% endblock %}
 
 {% block body_end %}
