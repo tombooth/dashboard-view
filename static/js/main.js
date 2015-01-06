@@ -10,7 +10,8 @@
     [].forEach.call(header_cells, function(header_cell, i) {
       axes[i] = {
         format_options: JSON.parse(header_cell.getAttribute('data-format')),
-        data: [header_cell.innerText],
+        label: header_cell.innerText,
+        data: [],
       }
     });
 
@@ -29,9 +30,21 @@
 
     var chart = c3.generate({
       data: {
-        x: axes[0].data[0],
+        x: axes[0].label,
         xFormat: "%Y-%m-%dT%H:%M:%S+00:00",
-        columns: axes.map(function(axis) { return axis.data; })
+        columns: axes.map(function(axis) {
+          var data = axis.data;
+
+          if (Array.isArray(data[0])) {
+            data = data.map(function(datum) { return datum[0]; });
+          } else {
+            data = data.slice();
+          }
+
+          data.unshift(axis.label);
+
+          return data;
+        })
       },
       axis: {
         x: {
