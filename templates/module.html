@@ -6,18 +6,12 @@
 
   <h{{depth}}>{{ title }}</h{{depth}}>
   {% if description %}<p>{{ description|safe }}</p>{% endif %}
+
   {% if data %}
-  <table>
-    <thead>
-      <tr>{% for field in data.fields %}<th data-format="{{ field.format }}">{{ field.label }}</th>{% endfor %}</tr>
-    </thead>
-    <tbody>
-      {% for row in data.rows %}
-      <tr>{% for cell in row %}<td data-raw="{{ cell.raw }}">{{ cell.formatted }}</td>{% endfor %}</tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="visualisation"></div>
+  {% include 'data-table.html' %}
   {% endif %}
+
   {% if children %}
   {{ children|safe }}
   {% endif %}

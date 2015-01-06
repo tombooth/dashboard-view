@@ -1,8 +1,8 @@
 (function(d3, c3, format) {
 
-  var module_tables = document.querySelectorAll('section.module > table');
+  var modules = document.querySelectorAll('section.module');
 
-  [].forEach.call(module_tables, function(table) {
+  function parse_axes(table) {
     var header_cells = table.querySelectorAll('th'),
         rows = table.querySelectorAll('tr'),
         axes = new Array(header_cells.length);
@@ -19,6 +19,13 @@
         axes[i].data.push(cell.getAttribute('data-raw'));
       });
     });
+
+    return axes;
+  }
+
+  [].forEach.call(modules, function(module_element) {
+    var table = module_element.querySelector('details:first-of-type'),
+        axes = parse_axes(table);
 
     var chart = c3.generate({
       data: {
@@ -37,8 +44,7 @@
       }
     });
 
-    table.parentNode.appendChild(chart.element);
-
+    module_element.querySelector('.visualisation').appendChild(chart.element);
   });
 
 })(window.d3, window.c3, window.format);
