@@ -1,2 +1,4 @@
 venv/
 *.pyc
+static/.webassets-cache/
+static/css/main.css

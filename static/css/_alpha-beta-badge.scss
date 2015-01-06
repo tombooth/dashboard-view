@@ -1,0 +1,18 @@
+
+.alpha-badge, .beta-badge {
+  @include bold-16();
+  margin-left: 5px;
+  padding: 2px 5px 0;
+  display: inline-block;
+  color: $white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.alpha-badge {
+  background-color: $alpha-colour;
+}
+
+.beta-badge {
+  background-color: $beta-colour;
+}
