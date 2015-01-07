@@ -1,10 +1,12 @@
 {% if depth==1 %}
   <main id="content">
+  <h1>Performance data:<br />
+  {{ title }}</h1>
 {% else %}
   <section class="module" id="{{ title|lower|replace(" ", "-") }}">
+  <h{{depth}}>{{ title }}</h{{depth}}>
 {% endif %}
 
-  <h{{depth}}>{{ title }}</h{{depth}}>
   {% if description %}<p>{{ description|safe }}</p>{% endif %}
 
   {% if data %}

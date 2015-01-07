@@ -18,8 +18,21 @@ main {
 // Using the bold-xx mixins from the govuk_toolkit _typography.scss file
 // Spacing is set in em, using the px to em function in the elements _helpers.scss file
 
+// Add cheeky non-standard heading size
+
+@mixin core-42($line-height: (50 / 42), $line-height-640: (35 / 30), $tabular-numbers: false, $font-weight: 400) {
+  $font-size: 42px;
+  $font-size-640: 30px;
+  $font-size-print: 18pt;
+  @include _core-font-generator($font-size, $font-size-640, $font-size-print, $line-height, $line-height-640, $tabular-numbers, $font-weight);
+}
+
+@mixin bold-42($line-height: (50 / 42), $line-height-640: (35 / 30), $tabular-numbers: false) {
+  @include core-42($line-height, $line-height-640, $tabular-numbers: $tabular-numbers, $font-weight: 700);
+}
+
 // Headings
-h1 {
+h1.large {
   @include bold-48();
 
   margin-top: em(15, 32);
@@ -39,8 +52,8 @@ h1 {
 
 }
 
-h1.midi {
-  @include bold-36();
+h1 {
+  @include bold-42();
 
   margin-top: em(25, 24);
   margin-bottom: em(10, 24);
