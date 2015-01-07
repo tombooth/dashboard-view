@@ -1,7 +1,7 @@
 {% if depth==1 %}
   <main id="content">
 {% else %}
-  <section class="module">
+  <section class="module" id="{{ title|lower|replace(" ", "-") }}">
 {% endif %}
 
   <h{{depth}}>{{ title }}</h{{depth}}>

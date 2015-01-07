@@ -1,11 +1,12 @@
+
 import config, scss
-
 from flask import Flask, jsonify, render_template
-
 from flask.ext.assets import Environment, Bundle
-
 from dashboard.module import Module
+# from lib.filters import *
+# from lib.slugify import slugify
 
+# jinja.filters['slugify'] = slugify
 
 app = Flask(__name__)
 app.debug = True
