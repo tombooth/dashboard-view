@@ -12,7 +12,7 @@
 @import "elements/reset";
 @import "elements/helpers";
 @import "elements/tables";
-@import "elements/panels"; // Fold-out information
+@import "elements/panels"; // Fold-out data-tables
 
 // dashboard-view imports
 @import "alpha-beta-badge";
@@ -22,3 +22,13 @@
 
 // graph styling
 @import "graphing-main";
+
+
+// Link styling for fold-out data tables
+details summary {
+  color: $link-colour;
+  &:hover {
+    text-decoration: underline;
+    color: $link-hover-colour;
+  }
+}
